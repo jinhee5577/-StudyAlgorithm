@@ -33,7 +33,7 @@ class Heap {
     heappush(value) {
         this.heap.push(value);
         let curIdx = this.heap.length - 1;   //현재노드 ,자식노드
-        let parIdx = (curIdx / 2) >> 0;   // 부모노드
+        let parIdx = (curIdx / 2) >> 0;   // 부모노드   >>  비트연산자, Shift Right 연산자로 0만큼 이동하면 소수점 아래를 버리는 것과 동일한 기능을 한다.          
         
         // 최소힙이므로 부모노드가 제일 작아야 한다. 즉 부모노드가 현재노드보다 큰 지 검사하며 반복한다.
         while(curIdx > 1 && this.heap[parIdx] > this.heap[curIdx]) {
@@ -79,9 +79,9 @@ class Heap {
         // 배열 마지막 원소를 root 위치에 먼저 배치하는 과정이다.
         // if-else로 분기되는 이유는 추후 heap이 비었는지 아닌지 확인하기 위해 size 체크 함수를 만들때 -1을 통해 0을 만들어주기 때문.
         
-        let curIdx = 1;
-        let leftIdx = curIdx * 2;
-        let rightIdx = curIdx * 2 + 1;
+        let curIdx = 1;   //root 노드
+        let leftIdx = curIdx * 2;   // 왼쪽 자식노드  (하향식)
+        let rightIdx = (curIdx * 2) + 1;  // 오른쪽 자식 노드  (하향식)
         
         if(!this.heap[leftIdx]) return min;
         // 왼쪽 자식이 없다는 것은 오른쪽 자식도 없는, 즉 루트만 있는 상태이므로 바로 반환!
@@ -99,9 +99,9 @@ class Heap {
           // 왼쪽과 오른쪽 자식 중에 더 작은 값과 현재 노드를 교체하면 된다.
           const minIdx = this.heap[leftIdx] > this.heap[rightIdx] ? rightIdx : leftIdx;
           [ this.heap[minIdx], this.heap[curIdx] ] = [ this.heap[curIdx], this.heap[minIdx] ];  // swap
-          curIdx = minIdx;
-          leftIdx = curIdx * 2;
-          rightIdx = curIdx * 2 + 1;
+          curIdx = minIdx;   // (하향식) 으로 다음 부모노드 기준점을 변경한다.
+          leftIdx = curIdx * 2;         //  다음 부모노드의 왼쪽자식노드.
+          rightIdx = curIdx * 2 + 1;   //   다음 부모노드의 오른쪽자식노드.
         }
         
         return min;
