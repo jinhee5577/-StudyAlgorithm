@@ -4,12 +4,20 @@ class Heap{  //  Heap 구현.  (최소힙)
         this.heap = [null];
     }
 
+    size() {
+        return this.heap.length - 1;
+    }
+    
+    getMin() {
+        return this.heap[1] ? this.heap[1] : null;
+    }
+
     heapPUSH(node){  // 삽입
-        this.heap.push(node);
+        this.heap = [...this.heap, ...node];
         let currentIDX = this.heap.length - 1;   //마지막노드, 자식노드, 현재노드
         let parIDX = Math.floor(currentIDX / 2);  //기준점의 부모노드
 
-        while(currentIDX > 1 && this.heap[parIDX] > this.heap[currentIDX]){
+        while(currentIDX > 1 && this.heap[parIDX][1] > this.heap[currentIDX][1]){
               [this.heap[parIDX], this.heap[currentIDX]] = [this.heap[currentIDX], this.heap[parIDX]];  // swap
               currentIDX = parIDX;   // 부모노드로 거슬러 올라가기위해 기준점 변경.
               parIDX = Math.floor(currentIDX / 2);    // 다시 부모노드 구하고
@@ -27,15 +35,15 @@ class Heap{  //  Heap 구현.  (최소힙)
         
         if(!this.heap[leftIDX]){ return root; }  // 왼쪽 자식이 없으면 자식이 없으므로 바로 root return한다!
         if(!this.heap[righIDX]){   // 오른쪽이 없으면 왼쪽자식만 있다는뜻
-            if(this.heap[leftIDX] < this.heap[currentIDX]){  // 왼쪽 자식보다 부모노드가 더 크다면 swap
+            if(this.heap[leftIDX][1] < this.heap[currentIDX][1]){  // 왼쪽 자식보다 부모노드가 더 크다면 swap
                  [this.heap[currentIDX], this.heap[leftIDX]] = [this.heap[leftIDX], this.heap[currentIDX]];    // swap
             }
             return root;
         }
 
-        while(this.heap[leftIDX] < this.heap[currentIDX] || this.heap[righIDX] < this.heap[currentIDX]){  
+        while(this.heap[leftIDX][1] < this.heap[currentIDX][1] || this.heap[righIDX][1] < this.heap[currentIDX][1]){  
             // 자식모두 있을경우라면, 부모와 비교를 해야하니 반복검사 시작.
-            let minIDX = this.heap[leftIDX] < this.heap[righIDX] ? leftIDX : righIDX;
+            let minIDX = this.heap[leftIDX][1] < this.heap[righIDX][1] ? leftIDX : righIDX;
             [this.heap[currentIDX], this.heap[minIDX]] = [this.heap[minIDX], this.heap[currentIDX]];   // swap
 
             currentIDX = minIDX;     //  햐향식으로 검사하기위해 자식노드로 기준점 변경.
@@ -44,7 +52,6 @@ class Heap{  //  Heap 구현.  (최소힙)
         }
         return root;     // root 를 return한다.             
     }
-
 
 }
 
@@ -71,3 +78,6 @@ function solution (jobs){
     let answer = Math.floor(total / sumTime.length);
     return answer;
 }
+
+
+//  테스트는 통과했지만 최종제출 에서 런타임 에러가 난다 ....ㅠㅠ  조금더 공부해서 다시풀자.
