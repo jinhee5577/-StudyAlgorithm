@@ -58,6 +58,9 @@ class Heap{  //  Heap 구현.  (최소힙)
 
 let jobs = [[0, 3], [1, 9], [2, 6]];
 function solution (jobs){
+    jobs.sort((a, b) => {
+        return a[0] - b[0];
+    });
     let discHeap = new Heap();      
     let newArr = [];
     let sumTime = [];
