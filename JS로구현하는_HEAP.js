@@ -83,28 +83,28 @@ class Heap {
         let leftIdx = curIdx * 2;   // 왼쪽 자식노드  (하향식)
         let rightIdx = (curIdx * 2) + 1;  // 오른쪽 자식 노드  (하향식)
         
-        if(!this.heap[leftIdx]) return min;
+        if(!this.heap[leftIdx]) return min;   
         // 왼쪽 자식이 없다는 것은 오른쪽 자식도 없는, 즉 루트만 있는 상태이므로 바로 반환!
         if(!this.heap[rightIdx]) {
           if(this.heap[leftIdx] < this.heap[curIdx]) {
             [ this.heap[leftIdx], this.heap[curIdx] ] = [ this.heap[curIdx], this.heap[leftIdx] ];
             // 오른쪽 자식이 없다면 왼쪽 자식하나만 있다는 것을 의미한다.
           }
-          return min;
+          return min;   // root 를 리턴한다.
         }
         
         // 위에 조건에 걸리지 않는 경우 왼쪽과 오른쪽 자식이 모두 있는 경우이다.
         // 따라서 현재 노드가 왼쪽 또는 오른쪽 보다 큰 지 작은지를 검사하며 반복한다.
         while(this.heap[leftIdx] < this.heap[curIdx] || this.heap[rightIdx] < this.heap[curIdx]) {
-          // 왼쪽과 오른쪽 자식 중에 더 작은 값과 현재 노드를 교체하면 된다.
-          const minIdx = this.heap[leftIdx] > this.heap[rightIdx] ? rightIdx : leftIdx;
-          [ this.heap[minIdx], this.heap[curIdx] ] = [ this.heap[curIdx], this.heap[minIdx] ];  // swap
-          curIdx = minIdx;   // (하향식) 으로 다음 부모노드 기준점을 변경한다.
-          leftIdx = curIdx * 2;         //  다음 부모노드의 왼쪽자식노드.
-          rightIdx = curIdx * 2 + 1;   //   다음 부모노드의 오른쪽자식노드.
-        }
+            // 왼쪽과 오른쪽 자식 중에 더 작은 값과 현재 노드를 교체하면 된다.
+            const minIdx = this.heap[leftIdx] > this.heap[rightIdx] ? rightIdx : leftIdx;
+            [ this.heap[minIdx], this.heap[curIdx] ] = [ this.heap[curIdx], this.heap[minIdx] ];  // swap
+            curIdx = minIdx;   // (하향식) 으로 다음 부모노드 기준점을 변경한다.
+            leftIdx = curIdx * 2;         //  다음 부모노드의 왼쪽자식노드.
+            rightIdx = curIdx * 2 + 1;   //   다음 부모노드의 오른쪽자식노드.
+          }
         
-        return min;
+        return min;   // root 를 리턴한다.
       }
   }
 

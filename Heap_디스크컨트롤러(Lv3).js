@@ -1,13 +1,3 @@
-function solution(){
-    let jobs = [[0, 3], [1, 9], [2, 6]];
-    let jobTime = [];
-    jobs.forEach((item) => {
-        jobTime.push(item[1]);
-    });
-
- //  console.log(jobTime);
-
-}
 
 class Heap{  //  Heap 구현.  (최소힙)
     constructor(){
@@ -35,8 +25,49 @@ class Heap{  //  Heap 구현.  (최소힙)
         let leftIDX = currentIDX * 2;           // 왼쪽 자식노드
         let righIDX = (currentIDX * 2) + 1;    // 오른쪽 자식노드 
         
-            //계속 풀이 진행중
+        if(!this.heap[leftIDX]){ return root; }  // 왼쪽 자식이 없으면 자식이 없으므로 바로 root return한다!
+        if(!this.heap[righIDX]){   // 오른쪽이 없으면 왼쪽자식만 있다는뜻
+            if(this.heap[leftIDX] < this.heap[currentIDX]){  // 왼쪽 자식보다 부모노드가 더 크다면 swap
+                 [this.heap[currentIDX], this.heap[leftIDX]] = [this.heap[leftIDX], this.heap[currentIDX]];    // swap
+            }
+            return root;
+        }
+
+        while(this.heap[leftIDX] < this.heap[currentIDX] || this.heap[righIDX] < this.heap[currentIDX]){  
+            // 자식모두 있을경우라면, 부모와 비교를 해야하니 반복검사 시작.
+            let minIDX = this.heap[leftIDX] < this.heap[righIDX] ? leftIDX : righIDX;
+            [this.heap[currentIDX], this.heap[minIDX]] = [this.heap[minIDX], this.heap[currentIDX]];   // swap
+
+            currentIDX = minIDX;     //  햐향식으로 검사하기위해 자식노드로 기준점 변경.
+            leftIDX = currentIDX * 2;  
+            righIDX = (currentIDX * 2) + 1;             
+        }
+        return root;     // root 를 return한다.             
     }
 
 
+}
+
+
+let jobs = [[0, 3], [1, 9], [2, 6]];
+function solution (jobs){
+    let discHeap = new Heap();      
+    let newArr = [];
+    let sumTime = [];
+    discHeap.heapPUSH(jobs);
+    //    let result = discHeap.heapPOP();
+
+    for(let i = 0; i < jobs.length; i++){
+        newArr.push(discHeap.heapPOP());
+    }
+    newArr.reduce((pre, curr) => { 
+        sumTime.push(pre + curr[1] - curr[0]);  
+        return  pre + curr[1];
+    }, 0);
+
+    let total = sumTime.reduce((pre, curr) => {
+                     return pre + curr;
+                }, 0);
+    let answer = Math.floor(total / sumTime.length);
+    return answer;
 }
