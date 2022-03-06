@@ -102,6 +102,8 @@ class Heap {
             curIdx = minIdx;   // (하향식) 으로 다음 부모노드 기준점을 변경한다.
             leftIdx = curIdx * 2;         //  다음 부모노드의 왼쪽자식노드.
             rightIdx = curIdx * 2 + 1;   //   다음 부모노드의 오른쪽자식노드.
+
+            if(leftIdx >= this.size()) break;
           }
         
         return min;   // root 를 리턴한다.
@@ -166,6 +168,10 @@ class MinHeap {
             curIdx = minIdx;
             leftIdx = curIdx * 2;
             rightIdx = curIdx * 2 + 1;
+
+            if(leftIdx >= this.size()) break;    //  마지막 왼쪽 자식이 없거나(더이상 노드가 없이 완전 이진트리가 끝난경우 이거나),
+                                                //   가장마지막 왼쪽노드까지만 존재할경우,(값이 더작더라도) minIdx 에서 비교할 오른쪽 노드도 없으므로 거기서 끝낸다.
+                                               //    어차피 다음 heappop() 할때 가장 마지막 노드는 root노드로 올라가고 재정렬을 실행하니까.
         }
 
         return min;
