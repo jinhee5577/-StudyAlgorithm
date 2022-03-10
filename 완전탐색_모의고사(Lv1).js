@@ -17,10 +17,14 @@ function solution(answers) {
     }
     
     score.sort((a, b) => { return a.sc - b.sc; });
-    // answer.push( if(score[2].sc > 0 ){ score[2].id });
-    
-    // 진행중
-    
-    
+    let max_sc = score[2].sc;
+    if(max_sc > 0){  // 같은 점수가 2개 이상일수도 있으니.
+       let filter = score.filter((item) => {return item.sc === max_sc; });
+       let new_map = filter.map((item) => { return item.id; });
+           answer = answer.concat(new_map);        
+    }
+  
     return answer;
 }
+
+
