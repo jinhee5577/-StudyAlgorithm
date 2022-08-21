@@ -1,3 +1,4 @@
+// 1번째 나의 풀이
 function solution (record){
     let answer = []; 
     let openchat = [];
@@ -48,3 +49,23 @@ function solution (record){
 
 //  잦은 데이터 갱신과 적은 데이터 출력에는 Object > Map
 //  적은 데이터 갱신과 많은 데이터 출력에는 Object<<<<<<<<<< Map 라고 한다.
+
+
+// 2번째 나의 풀이 
+function solution (record){
+   let answer = [];
+   const userID = new Map();
+
+   record.forEach((item) => {
+       let [command, id, nick] = item.split(' ');
+       if (command === 'Enter' || command === 'Change') userID.set(id, nick);
+   })
+
+   record.forEach((item) => {
+       let [command, id] = item.split(' ');
+       if (command === 'Enter') answer.push(`${userID.get(id)}님이 들어왔습니다.`);
+       if (command === 'Leave') answer.push(`${userID.get(id)}님이 나갔습니다.`);
+   })
+
+   return answer;
+}
