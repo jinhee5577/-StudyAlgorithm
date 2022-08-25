@@ -53,19 +53,25 @@ function solution (record){
 
 // 2번째 나의 풀이 
 function solution (record){
-   let answer = [];
-   const userID = new Map();
+   let answer = []; 
+   let userchat = new Map();
 
    record.forEach((item) => {
-       let [command, id, nick] = item.split(' ');
-       if (command === 'Enter' || command === 'Change') userID.set(id, nick);
-   })
+      let [command, id, name] = item.split(' ');  // 구조분해할당 해줌.
+      if(command === 'Enter' || command === 'Change'){
+         userchat.set(id, name);
+      }
+   });
 
-   record.forEach((item) => {
-       let [command, id] = item.split(' ');
-       if (command === 'Enter') answer.push(`${userID.get(id)}님이 들어왔습니다.`);
-       if (command === 'Leave') answer.push(`${userID.get(id)}님이 나갔습니다.`);
-   })
+   record.forEach((item) => {   // 입출입 기록을 순서대로 answer[]에 push함.
+      let [command, id] = item.split(' ');   // 구조분해할당 해줌.
+      if(command === 'Enter'){
+         answer.push(`${userchat.get(id)}님이 들어왔습니다.`);
+      }
+      if(command === 'Leave'){
+         answer.push(`${userchat.get(id)}님이 나갔습니다.`);
+      }
+   });
 
-   return answer;
+   return answer;     
 }
