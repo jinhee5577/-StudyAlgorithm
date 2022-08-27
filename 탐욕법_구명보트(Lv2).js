@@ -1,3 +1,4 @@
+// 나의 첫번째 풀이
 function solution(people, limit) {
     let answer = 0;
     people = people.sort((a,b) => {return a-b;});
