@@ -17,6 +17,23 @@ function solution(people, limit) {
     return answer;
  }
 
-
 // 테스트 케이스만 통과하고 최종은 통과하지 못했다.
 // 다시 생각해보자.
+
+
+
+// 나의 2번째 풀이
+function solution(people, limit) {
+   let answer = 0;
+   people = people.sort((a,b)=> {return a-b});
+   while(people.length){
+     let first = people.shift();   
+     if(first + people[0] <= limit){
+        people.shift();      
+     }  
+     answer++;
+   }
+
+   return answer;
+}
+// 테스트 케이스만 통과하고 최종은 통과하지 못했다. ㅠㅠ
